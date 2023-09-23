@@ -36,7 +36,9 @@ mixin SearchMixin {
   void searchByArtistOrSong(input) {
     List<Song> searchResult = myPlaylist[0]
         .songs
-        .where((t) => t.artist == input || t.name == input)
+        .where((t) =>
+            t.artist.toLowerCase().contains(input.toLowerCase()) ||
+            t.name.toLowerCase().contains(input.toLowerCase()) == input)
         .toList();
     if (searchResult.isEmpty) {
       print('No songs found');
@@ -44,7 +46,7 @@ mixin SearchMixin {
       print('In ${myPlaylist[0].title.toUpperCase()} playlist found:\n');
       for (final song in searchResult) {
         print(
-            '\'${song.name}\' by ${song.artist} ${song.duration} ${song.year}');
+            '\'${song.name}\' by ${song.artist}     ${song.duration} ${song.year}');
       }
       print(searchResult.totalTime());
     }
@@ -178,7 +180,7 @@ const mySongs = [
 const myPlaylist = [Playlist(title: 'Current Mood', songs: mySongs)];
 
 void main() {
-  //this line is search by artists or song
+  //this line is a search by artists or song
   myPlaylist[0].searchByArtistOrSong('Nadine Shah');
   //and this one id about formatted lpaylist output
   myPlaylist[0].display();
