@@ -19,12 +19,10 @@ class _CardScreenState extends State<CardScreen> {
   void previousCard() {
     setState(() {
       if (currentCardIndex == 0) {
-        currentCardIndex = cardsList.length -1;
-      }
-      else {
+        currentCardIndex = cardsList.length - 1;
+      } else {
         currentCardIndex--;
       }
-      
     });
   }
 
@@ -57,11 +55,11 @@ class _CardScreenState extends State<CardScreen> {
                 iconSize: 35,
                 onPressed: () {
                   Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const GridScreen(),
-                ),
-              );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const GridScreen(),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.person),
               ),
