@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/data/cards_list.dart';
+import 'package:flutter_course/data/models/art_card.dart';
 import 'package:flutter_course/presentation/widgets/card_screen.dart';
 
 class GridScreen extends StatelessWidget {
@@ -41,7 +42,7 @@ class GridScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LikedCard(index: index),
+                  builder: (context) => LikedCard(card: cardsList[index]),
                 ),
               );
             },
@@ -61,9 +62,9 @@ class GridScreen extends StatelessWidget {
 }
 
 class LikedCard extends StatelessWidget {
-  const LikedCard({super.key, required this.index});
+  const LikedCard({super.key, required this.card});
 
-  final int index;
+  final ArtCard card;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class LikedCard extends StatelessWidget {
             expandedHeight: 50.0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                cardsList[index].day,
+                card.day,
                 style: const TextStyle(color: Colors.black),
               ),
               centerTitle: true,
@@ -100,10 +101,8 @@ class LikedCard extends StatelessWidget {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Image.asset(cardsList[index].image),
-                const SizedBox(
-                  height: 25,
-                ),
+                Image.asset(card.image),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -114,22 +113,18 @@ class LikedCard extends StatelessWidget {
                         // ...
                       },
                     ),
-                    const SizedBox(
-                      width: 220,
-                    ),
-                    Text(cardsList[index].likesAmount,
+                    const SizedBox(width: 220),
+                    Text(card.likesAmount,
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold))
                   ],
                 ),
                 Text(
-                  cardsList[index].title,
+                  card.title,
                   style: const TextStyle(
                       fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -138,8 +133,8 @@ class LikedCard extends StatelessWidget {
             sliver: SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Text(cardsList[index].text),
-                  const SizedBox(height: 25)
+                  Text(card.text),
+                  const SizedBox(height: 25),
                 ],
               ),
             ),

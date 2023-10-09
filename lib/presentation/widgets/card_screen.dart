@@ -69,9 +69,7 @@ class _CardScreenState extends State<CardScreen> {
             child: Column(
               children: [
                 Image.asset(cardsList[currentCardIndex].image),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -82,9 +80,7 @@ class _CardScreenState extends State<CardScreen> {
                         // ...
                       },
                     ),
-                    const SizedBox(
-                      width: 220,
-                    ),
+                    const SizedBox(width: 220),
                     Text(cardsList[currentCardIndex].likesAmount,
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold))
@@ -95,9 +91,7 @@ class _CardScreenState extends State<CardScreen> {
                   style: const TextStyle(
                       fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
