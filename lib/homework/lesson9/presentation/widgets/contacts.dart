@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Contacts extends StatelessWidget {
   const Contacts({super.key});
@@ -6,29 +7,33 @@ class Contacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: Center(
         child: Stack(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'https://www.leopoldmuseum.org/',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 40),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   child: Text(
                       'LEOPOLD MUSEUM, MuseumsQuartier, Museumsplatz 1, 1070 '
                       'Wien',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center),
                 ),
                 const SizedBox(height: 60),
                 ElevatedButton(
-                  child: const Text('Return'),
+                  child: Text(
+                    AppLocalizations.of(context)!.close,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },

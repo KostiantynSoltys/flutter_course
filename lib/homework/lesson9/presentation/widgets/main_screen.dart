@@ -2,16 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_course/homework/lesson9/data/models/painting.dart';
 import 'package:flutter_course/homework/lesson9/data/paintings_list.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
-    'fab.dart';
+    'theme_switch_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_course/homework/lesson9/presentation/widgets/'
+    'fab_info.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'drawer.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'gallery_list.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'gallery_grid.dart';
+import 'package:flutter_course/homework/lesson9/presentation/widgets/'
+    'dropdown_lang_switch.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen(
+      {super.key,
+      required this.onLanguageSwitch,
+      required this.onThemeModeSwitch});
+
+  final void Function(Locale locale) onLanguageSwitch;
+  final Function onThemeModeSwitch;
 
   @override
   State<StatefulWidget> createState() {
@@ -21,7 +32,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   List<Painting> currentPaintings = paintingsList;
-  String sectionName = 'All';
+  String? sectionName;
 
   void changeToDrawings() {
     setState(
@@ -31,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
               (element) => element.genre.contains('Drawings'),
             )
             .toList();
-        sectionName = 'Drawings';
+        sectionName = AppLocalizations.of(context)!.drawings;
       },
     );
   }
@@ -44,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
               (element) => element.genre.contains('Abstract'),
             )
             .toList();
-        sectionName = 'Abstract';
+        sectionName = AppLocalizations.of(context)!.abstract;
       },
     );
   }
@@ -57,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
               (element) => element.genre.contains('Figurative'),
             )
             .toList();
-        sectionName = 'Figurative';
+        sectionName = AppLocalizations.of(context)!.figurative;
       },
     );
   }
@@ -70,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
               (element) => element.genre.contains('Landscape'),
             )
             .toList();
-        sectionName = 'Landscape';
+        sectionName = AppLocalizations.of(context)!.landscape;
       },
     );
   }
@@ -83,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
               (element) => element.genre.contains('Still Life'),
             )
             .toList();
-        sectionName = 'Still Life';
+        sectionName = AppLocalizations.of(context)!.stillLife;
       },
     );
   }
@@ -92,7 +103,7 @@ class _MainScreenState extends State<MainScreen> {
     setState(
       () {
         currentPaintings = paintingsList;
-        sectionName = 'All';
+        sectionName = AppLocalizations.of(context)!.all;
       },
     );
   }
@@ -101,23 +112,24 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(68, 0, 0, 0),
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(0.50),
         elevation: 0,
-        title: const Text(
-          'My Gallery',
+        title: Text(
+          AppLocalizations.of(context)!.myGallery,
           style: TextStyle(
-            color: Color.fromARGB(213, 255, 255, 255),
+            color: Theme.of(context).colorScheme.inverseSurface,
           ),
         ),
         centerTitle: true,
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: Color.fromARGB(190, 255, 255, 255),
+                color: Theme.of(context).colorScheme.inverseSurface,
                 size: 30, // Changing Drawer Icon Size
               ),
               onPressed: () {
@@ -127,6 +139,13 @@ class _MainScreenState extends State<MainScreen> {
             );
           },
         ),
+        actions: [
+          themeSwitch(context, widget),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: dropDownButton(context, widget),
+          )
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: floatingActionButton(context, sectionName),

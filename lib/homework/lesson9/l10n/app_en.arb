@@ -1,0 +1,46 @@
+{
+  "myGallery": "My Gallery",
+  "@myGallery": {
+    "description": "App's title in the AppBar"
+  },
+  "genres": "Genres",
+  "@genres": {
+    "description": "Header in drawer's genres sections"
+  },
+  "all": "All",
+  "@all": {
+    "description": "Default section in drawer's genres sections"
+  },
+  "abstract": "Abstract",
+  "@abstract": {
+    "description": "Section name in drawer's genres sections"
+  },
+  "drawings": "Drawings",
+  "@drawings": {
+    "description": "Section name in drawer's genres sections"
+  },
+  "figurative": "Figurative",
+  "@landscape": {
+    "description": "Section name in drawer's genres sections"
+  },
+  "landscape": "Landscape",
+  "@landscape": {
+    "description": "Section name in drawer's genres sections"
+  },
+  "stillLife": "Still Life",
+  "@stillLife": {
+    "description": "Section name in drawer's genres sections"
+  },
+  "contacts": "Contacts",
+  "@contacts": {
+    "description": "Contacts section in drawer"
+  },
+    "section": "Section",
+  "@section": {
+    "description": "Info about current page section name"
+  },
+    "close": "Close",
+  "@close": {
+    "description": "Info and Contact pages button that returns to main menu"
+  }
+}

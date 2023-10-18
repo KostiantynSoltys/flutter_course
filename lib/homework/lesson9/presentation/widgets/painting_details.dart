@@ -9,22 +9,25 @@ class PaintingDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: SafeArea(
         child: Center(
           child: Stack(
             children: [
               Image.network(painting.link),
               Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(137, 0, 0, 0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onInverseSurface
+                      .withOpacity(0.50),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     painting.description,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ),

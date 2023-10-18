@@ -15,7 +15,7 @@ Widget galleryList(currentPaintings) {
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
                   currentPaintings[index].description,
-                  style: const TextStyle(color: Colors.white),
+                  style: Theme.of(ctx).textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 ),
               ),

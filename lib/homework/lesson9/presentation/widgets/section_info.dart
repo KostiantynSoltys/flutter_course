@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SectionInfo extends StatelessWidget {
   const SectionInfo({super.key, required this.sectionName});
@@ -8,7 +9,7 @@ class SectionInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: Center(
         child: Stack(
           children: [
@@ -16,12 +17,15 @@ class SectionInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Section - $sectionName',
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                  '${AppLocalizations.of(context)!.section} - $sectionName',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  child: const Text('Close'),
+                  child: Text(
+                    AppLocalizations.of(context)!.close,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },

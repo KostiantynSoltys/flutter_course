@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'contacts.dart';
 
@@ -7,52 +8,64 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
   return Drawer(
     child: ListView(
       children: [
-        const DrawerHeader(
-          padding: EdgeInsets.only(top: 60),
+        DrawerHeader(
+          padding: const EdgeInsets.only(top: 60),
           decoration: BoxDecoration(
-            color: Color.fromARGB(158, 0, 0, 0),
+            color: Theme.of(context).colorScheme.background,
           ),
-          child: Text('Genres',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+          child: Text(AppLocalizations.of(context)!.genres,
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center),
         ),
         ListTile(
-          title: const Text('All', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.all,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             changeToAll();
             Navigator.of(context).pop();
           },
         ),
         ListTile(
-          title: const Text('Abstract', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.abstract,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             changeToAbstract();
             Navigator.of(context).pop();
           },
         ),
         ListTile(
-          title: const Text('Drawings', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.drawings,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             changeToDrawings();
             Navigator.of(context).pop();
           },
         ),
         ListTile(
-          title: const Text('Figurative', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.figurative,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             changeToFigurative();
             Navigator.of(context).pop();
           },
         ),
         ListTile(
-          title: const Text('Landscape', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.landscape,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             changeToLandscape();
             Navigator.of(context).pop();
           },
         ),
         ListTile(
-          title: const Text('Still Life', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.stillLife,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             changeToStillLife();
             Navigator.of(context).pop();
@@ -60,7 +73,9 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
         ),
         const SizedBox(height: 20),
         ListTile(
-          title: const Text('Contacts', textAlign: TextAlign.center),
+          title: Text(AppLocalizations.of(context)!.contacts,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
             Navigator.push(
               context,
