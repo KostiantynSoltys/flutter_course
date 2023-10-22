@@ -15,3 +15,12 @@ Every day there will be a small post about one of the personalities of Ukrainian
 ![Блок-схема/Project scheme:](ua_art.png)
 
 ![GIF з домашньої роботи](lesson4.gif)
+
+![GIF з домашньої роботи](lessons8-9.gif)
+
+![GIF з домашньої роботи](lesson9(1)compressed.gif)
+
+![GIF з домашньої роботи](lesson9(2).gif)
+
+![GIF з домашньої роботи](lesson#n.gif)
+
