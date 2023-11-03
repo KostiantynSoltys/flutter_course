@@ -40,7 +40,9 @@ class _NewTaskState extends State<NewTask> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Invalid input'),
+        title: const Text(
+          'Invalid input',
+        ),
         content: const Text(
             'Please make sure a valid title, description, deadline and status '
             'was entered'),
@@ -191,7 +193,7 @@ class _NewTaskState extends State<NewTask> {
                                 _selectedDeadline == null
                                     ? 'Select deadline'
                                     : formatter.format(_selectedDeadline!),
-                                style: const TextStyle(fontSize: 18),
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               IconButton(
                                 onPressed: _presentDatePicker,
@@ -234,9 +236,12 @@ class _NewTaskState extends State<NewTask> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(_selectedDeadline == null
-                                  ? 'No date selected'
-                                  : formatter.format(_selectedDeadline!)),
+                              Text(
+                                  _selectedDeadline == null
+                                      ? 'Select deadline'
+                                      : formatter.format(_selectedDeadline!),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
                               IconButton(
                                 onPressed: _presentDatePicker,
                                 icon: const Icon(Icons.calendar_month),

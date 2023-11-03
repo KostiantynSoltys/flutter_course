@@ -38,6 +38,20 @@ class MyApp extends StatelessWidget {
             foregroundColor: tasksDarkColorScheme.onPrimaryContainer,
           ),
         ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: tasksDarkColorScheme.onSecondaryContainer,
+                  fontSize: 18),
+              titleMedium: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: tasksDarkColorScheme.onSecondaryContainer,
+                  fontSize: 16),
+              titleSmall: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: tasksDarkColorScheme.onSecondaryContainer,
+                  fontSize: 14),
+            ),
       ),
       theme: ThemeData().copyWith(
         useMaterial3: true,
@@ -62,11 +76,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 18),
               titleMedium: TextStyle(
                   fontWeight: FontWeight.normal,
-                  color: ColorScheme.onSecondaryContainer,
+                  color: tasksColorScheme.onSecondaryContainer,
                   fontSize: 16),
               titleSmall: TextStyle(
                   fontWeight: FontWeight.normal,
-                  color: ColorScheme.onSecondaryContainer,
+                  color: tasksColorScheme.onSecondaryContainer,
                   fontSize: 14),
             ),
       ),
@@ -74,5 +88,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

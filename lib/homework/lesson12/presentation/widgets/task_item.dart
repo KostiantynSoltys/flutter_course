@@ -48,8 +48,8 @@ class TaskItem extends StatelessWidget {
               Row(
                 children: [
                   Text('Deadline: ',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  Text(data['deadline']),
+                      style: Theme.of(context).textTheme.titleMedium),
+                  Text(data['deadline'], style: Theme.of(context).textTheme.titleMedium),
                   const Spacer(),
                   DropdownButton(
                     iconSize: 30,
