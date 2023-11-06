@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_course/homework/lesson12/controller/tasks_actions.dart';
 import 'package:flutter_course/homework/lesson12/presentation/widgets/'
     'task_item.dart';
 
-Widget streamBuilder(context, onChangeStatus) {
+Widget streamBuilder(context) {
   final taskStream = FirebaseFirestore.instance.collection('tasks').snapshots();
+  final taskProvider = TasksActions();
 
   return StreamBuilder(
     stream: taskStream,
@@ -30,30 +32,11 @@ Widget streamBuilder(context, onChangeStatus) {
                     vertical: 43),
               ),
               onDismissed: (direction) async {
-                Future<void> deleteFromDataBase() async {
-                  Future.delayed(const Duration(milliseconds: 500)).then((_) {
-                    FirebaseFirestore.instance
-                        .collection('tasks')
-                        .doc(docs[index].id)
-                        .delete();
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        duration: Duration(seconds: 3),
-                        content: Text('Task deleted'),
-                      ),
-                    );
-                  });
-                }
-
-                await deleteFromDataBase();
+                await taskProvider.deleteTask(docs[index].id);
               },
               child: InkWell(
                 onTap: () => _showModalDialog(context, docs[index]),
-                child: TaskItem(
-                    data: docs[index],
-                    onChangeStatus: onChangeStatus,
-                    number: number),
+                child: TaskItem(data: docs[index], number: number),
               ),
             );
           });

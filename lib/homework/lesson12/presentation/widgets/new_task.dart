@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/homework/lesson12/controller/tasks_actions.dart';
 import 'package:flutter_course/homework/lesson12/presentation/widgets/'
     'task_item.dart';
 import 'package:intl/intl.dart';
@@ -6,9 +7,7 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat.yMd();
 
 class NewTask extends StatefulWidget {
-  const NewTask({super.key, required this.onAddTask});
-
-  final void Function(Map task) onAddTask;
+  const NewTask({super.key});
 
   @override
   State<NewTask> createState() {
@@ -22,6 +21,7 @@ class _NewTaskState extends State<NewTask> {
   final _textController = TextEditingController();
   DateTime? _selectedDeadline;
   Status _selectedStatus = Status.pending;
+  final taskProvider = TasksActions();
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -58,7 +58,7 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  void _submitTaskData() {
+  void _submitTaskData() async {
     if (_titleController.text.trim().isEmpty ||
         _descriptionController.text.trim().isEmpty ||
         _textController.text.trim().isEmpty ||
@@ -66,7 +66,7 @@ class _NewTaskState extends State<NewTask> {
       _showDialogue();
       return;
     }
-    widget.onAddTask(
+    await taskProvider.addTask(
       {
         'title': _titleController.text.toString(),
         'description': _descriptionController.text.toString(),
@@ -75,7 +75,7 @@ class _NewTaskState extends State<NewTask> {
         'status': _selectedStatus.name.toString(),
       },
     );
-    Navigator.pop(context);
+    if (context.mounted) Navigator.of(context).pop();
   }
 
   @override
