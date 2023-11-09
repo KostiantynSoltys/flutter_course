@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/data/cards_list.dart';
+import 'package:flutter_course/homework/lesson9/presentation/widgets/theme_switch_button.dart';
 import 'package:flutter_course/presentation/widgets/grid_screen.dart';
 //import 'package:intl/intl.dart';
 
 class CardScreen extends StatefulWidget {
-  const CardScreen({super.key});
+  const CardScreen({super.key, required this.onThemeModeSwitch});
+
+   final Function onThemeModeSwitch;
 
   @override
   State<CardScreen> createState() {
@@ -15,7 +18,7 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   var currentCardIndex = cardsList.length - 1;
   //String todayDate = DateFormat('yMd').format(DateTime.now());
-
+  
   void previousCard() {
     setState(() {
       if (currentCardIndex == 0) {
@@ -29,13 +32,15 @@ class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: const Color.fromARGB(255, 255, 175, 16),
-            pinned: false,
-            expandedHeight: 50.0,
+            backgroundColor:
+                Theme.of(context).colorScheme.background.withOpacity(0.50),
+            elevation: 0,
+            pinned: true,
+            //expandedHeight: 50.0,
             leading: IconButton(
               iconSize: 30,
               icon: const Icon(Icons.arrow_back),
@@ -46,18 +51,20 @@ class _CardScreenState extends State<CardScreen> {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 cardsList[currentCardIndex].day,
-                style: const TextStyle(color: Colors.black),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.inverseSurface),
               ),
               centerTitle: true,
             ),
             actions: [
+              themeSwitch(context, widget),
               IconButton(
                 iconSize: 35,
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const GridScreen(),
+                      builder: (context) => GridScreen(onThemeModeSwitch: widget.onThemeModeSwitch),
                     ),
                   );
                 },

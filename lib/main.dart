@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/homework/lesson9/presentation/widgets/dark_theme.dart';
+import 'package:flutter_course/homework/lesson9/presentation/widgets/theme.dart';
 import 'package:flutter_course/presentation/widgets/card_screen.dart';
 
 final theme = ThemeData(
@@ -12,15 +14,33 @@ void main() {
   runApp(const App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _AppState();
+  }
+}
+
+class _AppState extends State<App> {
+  Locale? locale;
+  ThemeMode themeModeCustom = ThemeMode.system;
+
+  onThemeModeSwitch(mode) {
+    setState(() {
+      themeModeCustom = mode;
+    });
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: theme,
-      home: const CardScreen(),
+      themeMode: themeModeCustom,
+      darkTheme: myDarkTheme(),
+      theme: myTheme(),
+      home: CardScreen(onThemeModeSwitch: onThemeModeSwitch),
     );
   }
 }

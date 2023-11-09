@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_course/data/cards_list.dart';
 import 'package:flutter_course/data/models/art_card.dart';
 import 'package:flutter_course/presentation/widgets/card_screen.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class GridScreen extends StatelessWidget {
-  const GridScreen({super.key});
+  const GridScreen({super.key, required this.onThemeModeSwitch});
+  final Function onThemeModeSwitch;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 175, 16),
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(0.50),
         title: const Text('Вподобане'),
         centerTitle: true,
         actions: [
@@ -20,7 +24,8 @@ class GridScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CardScreen(),
+                  builder: (context) =>
+                      CardScreen(onThemeModeSwitch: onThemeModeSwitch),
                 ),
               );
             },
@@ -28,12 +33,9 @@ class GridScreen extends StatelessWidget {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          crossAxisCount: 3,
+      body: MasonryGridView.builder(
+        gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
         ),
         itemCount: cardsList.length,
         itemBuilder: (context, index) {
@@ -42,17 +44,15 @@ class GridScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LikedCard(card: cardsList[index]),
+                  builder: (context) => LikedCard(
+                      card: cardsList[index],
+                      onThemeModeSwitch: onThemeModeSwitch),
                 ),
               );
             },
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(cardsList[index].image),
-                ),
-              ),
+            child: Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Image.asset(cardsList[index].image),
             ),
           );
         },
@@ -62,8 +62,10 @@ class GridScreen extends StatelessWidget {
 }
 
 class LikedCard extends StatelessWidget {
-  const LikedCard({super.key, required this.card});
+  const LikedCard(
+      {super.key, required this.card, required this.onThemeModeSwitch});
 
+  final Function onThemeModeSwitch;
   final ArtCard card;
 
   @override
@@ -90,7 +92,8 @@ class LikedCard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const GridScreen(),
+                      builder: (context) =>
+                          GridScreen(onThemeModeSwitch: onThemeModeSwitch),
                     ),
                   );
                 },
