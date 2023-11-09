@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/homework/lesson12/controller/tasks_actions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum Status { pending, inProgress, completed }
 
 class TaskItem extends ConsumerWidget {
-  const TaskItem({super.key, required this.data, required this.number});
+  TaskItem({super.key, required this.data, required this.number});
 
   final dynamic data;
   final int number;
 
+  final taskNotifier = TasksActions();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final statusProvider = StateProvider<Status>((ref) {
-      Status currentStatus =
-          Status.values.firstWhere((element) => element.name == data['status']);
-      return currentStatus;
-    });
+    TextTheme textStyle = Theme.of(context).textTheme;
 
-    final updateTaskProvider = Provider<dynamic>((ref) {
-      final statusType = ref.watch(statusProvider);
-      FirebaseFirestore.instance
-          .collection('tasks')
-          .doc(data.id)
-          .update({'status': statusType.name});
-    });
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -41,31 +32,28 @@ class TaskItem extends ConsumerWidget {
                   radius: 12,
                   child: Text(
                     number.toString(),
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: textStyle.titleSmall,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(data['title'],
-                      style: Theme.of(context).textTheme.titleLarge),
+                  child: Text(data['title'], style: textStyle.titleLarge),
                 )
               ],
             ),
             const SizedBox(height: 8),
-            Text(data['description'],
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(data['description'], style: textStyle.titleMedium),
             Row(
               children: [
-                Text('Deadline: ',
-                    style: Theme.of(context).textTheme.titleMedium),
-                Text(data['deadline'],
-                    style: Theme.of(context).textTheme.titleMedium),
+                Text('Deadline: ', style: textStyle.titleMedium),
+                Text(data['deadline'], style: textStyle.titleMedium),
                 const Spacer(),
                 DropdownButton<Status>(
                   iconSize: 30,
                   iconEnabledColor: Theme.of(context).primaryColor,
                   dropdownColor: Theme.of(context).primaryColor,
-                  value: ref.read(statusProvider),
+                  value: Status.values
+                      .firstWhere((element) => element.name == data['status']),
                   hint: Text(data['status'].toString().toUpperCase()),
                   items: Status.values
                       .map(
@@ -79,9 +67,8 @@ class TaskItem extends ConsumerWidget {
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {
-                    ref.read(statusProvider.notifier).state = value!;
-                    ref.watch(updateTaskProvider);
+                  onChanged: (value) async {
+                    await taskNotifier.changeTaskStatus(value!, data.id);
                   },
                 ),
               ],

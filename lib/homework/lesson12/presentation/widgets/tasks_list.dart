@@ -6,7 +6,7 @@ import 'package:flutter_course/homework/lesson12/presentation/widgets/'
 
 Widget streamBuilder(context) {
   final taskStream = FirebaseFirestore.instance.collection('tasks').snapshots();
-  final taskProvider = TasksActions();
+  final taskNotifier = TasksActions();
 
   return StreamBuilder(
     stream: taskStream,
@@ -32,7 +32,7 @@ Widget streamBuilder(context) {
                     vertical: 43),
               ),
               onDismissed: (direction) async {
-                await taskProvider.deleteTask(docs[index].id);
+                await taskNotifier.deleteTask(docs[index].id);
               },
               child: InkWell(
                 onTap: () => _showModalDialog(context, docs[index]),
