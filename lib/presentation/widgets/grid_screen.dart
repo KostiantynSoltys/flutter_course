@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/data/cards_list.dart';
 import 'package:flutter_course/data/models/art_card.dart';
-import 'package:flutter_course/presentation/widgets/card_screen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class GridScreen extends StatelessWidget {
@@ -13,25 +12,11 @@ class GridScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor:
             Theme.of(context).colorScheme.background.withOpacity(0.50),
         title: const Text('Вподобане'),
         centerTitle: true,
-        actions: [
-          IconButton(
-            iconSize: 35,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      CardScreen(onThemeModeSwitch: onThemeModeSwitch),
-                ),
-              );
-            },
-            icon: const Icon(Icons.person),
-          ),
-        ],
       ),
       body: MasonryGridView.builder(
         gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -71,35 +56,21 @@ class LikedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: const Color.fromARGB(255, 255, 175, 16),
-            pinned: false,
+            backgroundColor:
+                Theme.of(context).colorScheme.background.withOpacity(0.50),
+            pinned: true,
             expandedHeight: 50.0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 card.day,
-                style: const TextStyle(color: Colors.black),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               centerTitle: true,
             ),
-            actions: [
-              IconButton(
-                iconSize: 35,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          GridScreen(onThemeModeSwitch: onThemeModeSwitch),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.person),
-              ),
-            ],
           ),
           SliverToBoxAdapter(
             child: Column(
@@ -118,14 +89,12 @@ class LikedCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 220),
                     Text(card.likesAmount,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold))
+                        style: Theme.of(context).textTheme.bodyMedium)
                   ],
                 ),
                 Text(
                   card.title,
-                  style: const TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 20),
               ],
@@ -136,7 +105,8 @@ class LikedCard extends StatelessWidget {
             sliver: SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Text(card.text),
+                  Text(card.text,
+                      style: Theme.of(context).textTheme.bodyMedium),
                   const SizedBox(height: 25),
                 ],
               ),

@@ -1,7 +1,10 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_course/firebase_options.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/dark_theme.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/theme.dart';
-import 'package:flutter_course/presentation/widgets/card_screen.dart';
+import 'package:flutter_course/presentation/widgets/main_page.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -10,7 +13,11 @@ final theme = ThemeData(
   ),
 );
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAppCheck.instance
+      .activate(androidProvider: AndroidProvider.debug);
   runApp(const App());
 }
 
@@ -40,7 +47,8 @@ class _AppState extends State<App> {
       themeMode: themeModeCustom,
       darkTheme: myDarkTheme(),
       theme: myTheme(),
-      home: CardScreen(onThemeModeSwitch: onThemeModeSwitch),
+      // home: CardScreen(onThemeModeSwitch: onThemeModeSwitch),
+      home: MainPage(onThemeModeSwitch: onThemeModeSwitch),
     );
   }
 }
