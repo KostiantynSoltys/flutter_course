@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_course/homework/lesson12/presentation/widgets/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_course/firebase_options.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 var tasksColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 210, 63));
@@ -16,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

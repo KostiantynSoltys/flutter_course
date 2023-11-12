@@ -41,6 +41,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   firebase_core: ^2.21.0
   cloud_firestore: ^4.12.2
+  flutter_riverpod: ^2.4.5
 
 dev_dependencies:
   flutter_test:
