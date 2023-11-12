@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/data/cards_list.dart';
-import 'package:flutter_course/presentation/widgets/grid_screen.dart';
+import 'package:flutter_course/presentation/widgets/bottom_sheet.dart';
 //import 'package:intl/intl.dart';
 
 class CardScreen extends StatefulWidget {
-  const CardScreen({super.key});
+  const CardScreen({super.key, required this.onThemeModeSwitch});
+
+  final Function onThemeModeSwitch;
 
   @override
   State<CardScreen> createState() {
@@ -29,13 +31,14 @@ class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: const Color.fromARGB(255, 255, 175, 16),
-            pinned: false,
-            expandedHeight: 50.0,
+            backgroundColor:
+                Theme.of(context).colorScheme.background.withOpacity(0.50),
+            elevation: 0,
+            pinned: true,
             leading: IconButton(
               iconSize: 30,
               icon: const Icon(Icons.arrow_back),
@@ -46,23 +49,12 @@ class _CardScreenState extends State<CardScreen> {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 cardsList[currentCardIndex].day,
-                style: const TextStyle(color: Colors.black),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               centerTitle: true,
             ),
             actions: [
-              IconButton(
-                iconSize: 35,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GridScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.person),
-              ),
+              bottomSheet(context, widget),
             ],
           ),
           SliverToBoxAdapter(
@@ -82,25 +74,24 @@ class _CardScreenState extends State<CardScreen> {
                     ),
                     const SizedBox(width: 220),
                     Text(cardsList[currentCardIndex].likesAmount,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold))
+                        style: Theme.of(context).textTheme.bodyMedium)
                   ],
                 ),
                 Text(
                   cardsList[currentCardIndex].title,
-                  style: const TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 20),
               ],
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             sliver: SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Text(cardsList[currentCardIndex].text),
+                  Text(cardsList[currentCardIndex].text,
+                      style: Theme.of(context).textTheme.bodyMedium),
                   const SizedBox(height: 25)
                 ],
               ),
