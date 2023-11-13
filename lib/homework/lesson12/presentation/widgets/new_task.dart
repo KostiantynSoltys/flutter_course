@@ -21,7 +21,7 @@ class _NewTaskState extends State<NewTask> {
   final _textController = TextEditingController();
   DateTime? _selectedDeadline;
   Status _selectedStatus = Status.pending;
-  final taskProvider = TasksActions();
+  final taskNotifier = TasksActions();
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -66,7 +66,7 @@ class _NewTaskState extends State<NewTask> {
       _showDialogue();
       return;
     }
-    await taskProvider.addTask(
+    await taskNotifier.addTask(
       {
         'title': _titleController.text.toString(),
         'description': _descriptionController.text.toString(),
@@ -88,6 +88,7 @@ class _NewTaskState extends State<NewTask> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textStyle = Theme.of(context).textTheme;
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(
       builder: (ctx, constraints) {
@@ -193,7 +194,7 @@ class _NewTaskState extends State<NewTask> {
                                 _selectedDeadline == null
                                     ? 'Select deadline'
                                     : formatter.format(_selectedDeadline!),
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: textStyle.titleMedium,
                               ),
                               IconButton(
                                 onPressed: _presentDatePicker,
@@ -240,8 +241,7 @@ class _NewTaskState extends State<NewTask> {
                                   _selectedDeadline == null
                                       ? 'Select deadline'
                                       : formatter.format(_selectedDeadline!),
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
+                                  style: textStyle.titleMedium),
                               IconButton(
                                 onPressed: _presentDatePicker,
                                 icon: const Icon(Icons.calendar_month),
