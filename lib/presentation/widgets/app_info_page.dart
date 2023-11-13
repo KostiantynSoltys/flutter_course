@@ -58,19 +58,6 @@ class AppInfoPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //       padding: const EdgeInsets.symmetric(vertical: 10),
-            //       shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(10))),
-            //   onPressed: () {
-            //     Navigator.pop(context);
-            //   },
-            //   child: const Padding(
-            //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            //     child: Text('Повернутись на головну'),
-            //   ),
-            // ),
           ],
         ),
       ),

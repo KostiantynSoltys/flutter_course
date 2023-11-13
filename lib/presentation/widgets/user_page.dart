@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
@@ -39,11 +40,14 @@ class UserPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10))),
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
+                context.pop();
+                //Navigator.pop(context);
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                child: Text('Вийти з акаунту'),
+                child: Text(
+                  'Вийти з акаунту',
+                ),
               ),
             ),
           ],

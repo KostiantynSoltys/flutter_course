@@ -65,7 +65,8 @@ class TaskItem extends ConsumerWidget {
                   iconSize: 30,
                   iconEnabledColor: Theme.of(context).primaryColor,
                   dropdownColor: Theme.of(context).primaryColor,
-                  value: ref.read(statusProvider),
+                  value: Status.values
+                      .firstWhere((element) => element.name == data['status']),
                   hint: Text(data['status'].toString().toUpperCase()),
                   items: Status.values
                       .map(
@@ -79,7 +80,7 @@ class TaskItem extends ConsumerWidget {
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {
+                  onChanged: (value) async {
                     ref.read(statusProvider.notifier).state = value!;
                     ref.watch(updateTaskProvider);
                   },

@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key, required this.showLoginPage});
-
-  final VoidCallback showLoginPage;
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -28,6 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
+      if (context.mounted) {
+        context.go("/");
+      }
     }
   }
 
@@ -151,7 +153,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text('Already registered? ',
                         style: Theme.of(context).textTheme.bodySmall),
                     GestureDetector(
-                      onTap: widget.showLoginPage,
+                      onTap: () => context.go("/login"),
                       child: Text(
                         'Login Page',
                         style: TextStyle(
