@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_course/presentation/widgets/auth_page.dart';
 import 'package:flutter_course/presentation/widgets/card_screen.dart';
+import 'package:flutter_course/presentation/widgets/login_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key, required this.onThemeModeSwitch});
@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
           if (snapshot.hasData) {
             return CardScreen(onThemeModeSwitch: onThemeModeSwitch);
           } else {
-            return const AuthPage();
+            return const LoginPage();
           }
         },
       ),

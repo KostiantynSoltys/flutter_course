@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'theme_switch_button.dart';
-import 'package:flutter_course/presentation/widgets/app_info_page.dart';
-import 'package:flutter_course/presentation/widgets/feedback_page.dart';
-import 'package:flutter_course/presentation/widgets/grid_screen.dart';
-import 'package:flutter_course/presentation/widgets/user_page.dart';
+import 'package:go_router/go_router.dart';
 
 Widget bottomSheet(context, widget) {
   return IconButton(
@@ -30,14 +27,8 @@ Widget bottomSheet(context, widget) {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
+                        context.go("/liked_list");
                         Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GridScreen(
-                                onThemeModeSwitch: widget.onThemeModeSwitch),
-                          ),
-                        );
                       },
                       child: const Text('Вподобане'),
                     ),
@@ -47,13 +38,8 @@ Widget bottomSheet(context, widget) {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
+                        context.go("/feedback");
                         Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FeedbackPage(),
-                          ),
-                        );
                       },
                       child: const Text('Ваш хід'),
                     ),
@@ -68,13 +54,8 @@ Widget bottomSheet(context, widget) {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: () {
+                              context.go("/settings");
                               Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const UserPage(),
-                                ),
-                              );
                             },
                             child: const Text('Про вас'),
                           ),
@@ -88,13 +69,8 @@ Widget bottomSheet(context, widget) {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: () {
+                              context.go("/info");
                               Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AppInfoPage(),
-                                ),
-                              );
                             },
                             child: const Text('Про нас'),
                           ),
