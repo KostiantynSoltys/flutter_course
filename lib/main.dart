@@ -2,7 +2,11 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_course/blocs/art_cards_bloc/art_cards_bloc.dart';
+import 'package:flutter_course/blocs/liked_cards_bloc/liked_cards_bloc.dart';
 import 'package:flutter_course/data/models/art_card.dart';
+import 'package:flutter_course/data/models/repository.dart';
 import 'package:flutter_course/firebase_options.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/dark_theme.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/theme.dart';
@@ -11,7 +15,7 @@ import 'package:flutter_course/presentation/widgets/error_page.dart';
 import 'package:flutter_course/presentation/widgets/feedback_page.dart';
 import 'package:flutter_course/presentation/widgets/forgot_password_page.dart';
 import 'package:flutter_course/presentation/widgets/grid_screen.dart';
-import 'package:flutter_course/presentation/widgets/liked_card.dart';
+import 'package:flutter_course/presentation/widgets/liked_card_screen.dart';
 import 'package:flutter_course/presentation/widgets/login_page.dart';
 import 'package:flutter_course/presentation/widgets/main_page.dart';
 import 'package:flutter_course/presentation/widgets/register_page.dart';
@@ -30,7 +34,23 @@ Future main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAppCheck.instance
       .activate(androidProvider: AndroidProvider.debug);
-  runApp(const App());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<ArtCardsBloc>(
+          create: (context) => ArtCardsBloc(
+            repository: Repository(),
+          ),
+        ),
+        BlocProvider<LikedCardsBloc>(
+          create: (context) => LikedCardsBloc(
+            repository: Repository(),
+          ),
+        ),
+      ],
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatefulWidget {
@@ -82,8 +102,7 @@ class _AppState extends State<App> {
             ),
             GoRoute(
               path: "liked_list",
-              builder: (context, state) =>
-                  GridScreen(onThemeModeSwitch: onThemeModeSwitch),
+              builder: (context, state) => const GridScreen(),
               routes: [
                 GoRoute(
                     path: "liked_card",
