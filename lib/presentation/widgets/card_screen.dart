@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/data/cards_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_course/blocs/art_cards_bloc/art_cards_bloc.dart';
+import 'package:flutter_course/data/models/art_card.dart';
+import 'package:flutter_course/presentation/widgets/art_card_image.dart';
+import 'package:flutter_course/presentation/widgets/art_card_text.dart';
 import 'package:flutter_course/presentation/widgets/bottom_sheet.dart';
-//import 'package:intl/intl.dart';
 
 class CardScreen extends StatefulWidget {
   const CardScreen({super.key, required this.onThemeModeSwitch});
@@ -15,90 +18,95 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
-  var currentCardIndex = cardsList.length - 1;
-  //String todayDate = DateFormat('yMd').format(DateTime.now());
+  int currentCardIndex = 0;
 
-  void previousCard() {
+  List<ArtCard> artCardsList = [];
+
+  void previousCard(length) {
     setState(() {
-      if (currentCardIndex == 0) {
-        currentCardIndex = cardsList.length - 1;
-      } else {
-        currentCardIndex--;
-      }
+      currentCardIndex++;
+    });
+  }
+
+  void nextCard(length) {
+    setState(() {
+      currentCardIndex--;
     });
   }
 
   @override
+  void initState() {
+    BlocProvider.of<ArtCardsBloc>(context).add(LoadArtCards());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final ArtCardsBloc artCardBloc = BlocProvider.of<ArtCardsBloc>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor:
-                Theme.of(context).colorScheme.background.withOpacity(0.50),
-            elevation: 0,
-            pinned: true,
-            leading: IconButton(
-              iconSize: 30,
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                previousCard();
-              },
-            ),
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                cardsList[currentCardIndex].day,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              centerTitle: true,
-            ),
-            actions: [
-              bottomSheet(context, widget),
-            ],
-          ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                Image.asset(cardsList[currentCardIndex].image),
-                const SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      iconSize: 30,
-                      icon: const Icon(Icons.thumb_up_off_alt_outlined),
-                      onPressed: () {
-                        // ...
-                      },
+      body: BlocBuilder<ArtCardsBloc, ArtCardsState>(
+        builder: (context, state) {
+          if (state is ArtCardsLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ArtCardsLoaded) {
+            final artCardsList = state.artCards;
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: Theme.of(context)
+                      .colorScheme
+                      .background
+                      .withOpacity(0.50),
+                  elevation: 0,
+                  pinned: true,
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Row(
+                      children: [
+                        if (currentCardIndex != artCardsList.length - 1)
+                          IconButton(
+                            iconSize: 25,
+                            icon: const Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              previousCard(artCardsList.length);
+                            },
+                          ),
+                      ],
                     ),
-                    const SizedBox(width: 220),
-                    Text(cardsList[currentCardIndex].likesAmount,
-                        style: Theme.of(context).textTheme.bodyMedium)
+                  ),
+                  actions: [
+                    bottomSheet(context, widget),
+                    if (currentCardIndex != 0)
+                      IconButton(
+                        iconSize: 25,
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: () {
+                          nextCard(artCardsList.length);
+                        },
+                      )
                   ],
                 ),
-                Text(
-                  cardsList[currentCardIndex].title,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 20),
+                artCardImage(context, artCardsList[currentCardIndex], false),
+                artCardText(context, artCardsList[currentCardIndex]),
               ],
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Text(cardsList[currentCardIndex].text,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  const SizedBox(height: 25)
-                ],
-              ),
-            ),
-          ),
-        ],
-        controller: ScrollController(),
+              controller: ScrollController(),
+            );
+          } else if (state is ArtCardsOperationSuccess) {
+            artCardBloc.add(
+              LoadArtCards(),
+            );
+            return Container();
+          } else if (state is ArtCardsError) {
+            return Center(
+              child: Text(state.errorMessage),
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }

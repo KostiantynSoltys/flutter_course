@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
-        useMaterial3: true,
         colorScheme: tasksDarkColorScheme,
         cardTheme: const CardTheme().copyWith(
           color: tasksDarkColorScheme.secondaryContainer,
@@ -55,7 +54,6 @@ class MyApp extends StatelessWidget {
             ),
       ),
       theme: ThemeData().copyWith(
-        useMaterial3: true,
         colorScheme: tasksColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
           backgroundColor: (const Color.fromARGB(255, 245, 114, 6)),

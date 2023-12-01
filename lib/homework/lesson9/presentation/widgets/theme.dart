@@ -6,7 +6,6 @@ var myColorScheme =
 
 ThemeData myTheme() {
   return ThemeData().copyWith(
-    useMaterial3: true,
     colorScheme: myColorScheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

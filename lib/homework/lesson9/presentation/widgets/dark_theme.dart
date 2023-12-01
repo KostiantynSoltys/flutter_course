@@ -7,7 +7,6 @@ var myDarkColorScheme = ColorScheme.fromSeed(
 
 ThemeData myDarkTheme() {
   return ThemeData.dark().copyWith(
-    useMaterial3: true,
     colorScheme: myDarkColorScheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
