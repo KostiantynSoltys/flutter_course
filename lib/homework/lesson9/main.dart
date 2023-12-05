@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_course/homework/lesson9/bloc/paintings_bloc.dart';
-import 'package:flutter_course/homework/lesson9/data/network_client.dart.dart';
+import 'package:flutter_course/homework/lesson9/data/network_client.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'main_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
