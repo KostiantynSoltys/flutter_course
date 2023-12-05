@@ -1,33 +1,33 @@
 {
-  "myGallery": "My Gallery",
+  "myGallery": "Die Brücke",
   "@myGallery": {
     "description": "App's title in the AppBar"
   },
-  "genres": "Genres",
+  "genres": "Artists",
   "@genres": {
     "description": "Header in drawer's genres sections"
   },
-  "all": "All",
+  "all": "Emil Nolde",
   "@all": {
     "description": "Default section in drawer's genres sections"
   },
-  "abstract": "Abstract",
+  "abstract": "Otto Dix",
   "@abstract": {
     "description": "Section name in drawer's genres sections"
   },
-  "drawings": "Drawings",
+  "drawings": "Otto Mueller",
   "@drawings": {
     "description": "Section name in drawer's genres sections"
   },
-  "figurative": "Figurative",
+  "figurative": "Max Pechstein",
   "@landscape": {
     "description": "Section name in drawer's genres sections"
   },
-  "landscape": "Landscape",
+  "landscape": "Erich Heckel",
   "@landscape": {
     "description": "Section name in drawer's genres sections"
   },
-  "stillLife": "Still Life",
+  "stillLife": "Karl Schmidt Rottluff",
   "@stillLife": {
     "description": "Section name in drawer's genres sections"
   },

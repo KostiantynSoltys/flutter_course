@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/homework/lesson9/data/models/painting.dart';
-import 'package:flutter_course/homework/lesson9/data/paintings_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_course/homework/lesson9/bloc/paintings_bloc.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'theme_switch_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,85 +31,20 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Painting> currentPaintings = paintingsList;
+
   String? sectionName;
+  String artist = 'alfred-kubin';
 
-  void changeToDrawings() {
-    setState(
-      () {
-        currentPaintings = paintingsList
-            .where(
-              (element) => element.genre.contains('Drawings'),
-            )
-            .toList();
-        sectionName = AppLocalizations.of(context)!.drawings;
-      },
-    );
-  }
-
-  void changeToAbstract() {
-    setState(
-      () {
-        currentPaintings = paintingsList
-            .where(
-              (element) => element.genre.contains('Abstract'),
-            )
-            .toList();
-        sectionName = AppLocalizations.of(context)!.abstract;
-      },
-    );
-  }
-
-  void changeToFigurative() {
-    setState(
-      () {
-        currentPaintings = paintingsList
-            .where(
-              (element) => element.genre.contains('Figurative'),
-            )
-            .toList();
-        sectionName = AppLocalizations.of(context)!.figurative;
-      },
-    );
-  }
-
-  void changeToLandscape() {
-    setState(
-      () {
-        currentPaintings = paintingsList
-            .where(
-              (element) => element.genre.contains('Landscape'),
-            )
-            .toList();
-        sectionName = AppLocalizations.of(context)!.landscape;
-      },
-    );
-  }
-
-  void changeToStillLife() {
-    setState(
-      () {
-        currentPaintings = paintingsList
-            .where(
-              (element) => element.genre.contains('Still Life'),
-            )
-            .toList();
-        sectionName = AppLocalizations.of(context)!.stillLife;
-      },
-    );
-  }
-
-  void changeToAll() {
-    setState(
-      () {
-        currentPaintings = paintingsList;
-        sectionName = AppLocalizations.of(context)!.all;
-      },
-    );
+  @override
+  void initState() {
+    BlocProvider.of<PaintingsBloc>(context)
+        .add(LoadPaintings(artist));
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final PaintingsBloc paintingsBloc = BlocProvider.of<PaintingsBloc>(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
@@ -151,15 +86,41 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: floatingActionButton(context, sectionName),
       drawer: SizedBox(
         width: 170,
-        child: drawer(context, changeToAll, changeToAbstract, changeToDrawings,
-            changeToFigurative, changeToLandscape, changeToStillLife),
+        child:
+            drawer(context, paintingsBloc, artist
+                ),
       ),
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          if (constraints.maxWidth > 600) {
-            return galleryList(currentPaintings);
+      body: BlocBuilder<PaintingsBloc, PaintingsState>(
+        builder: (context, state) {
+          if (state is PaintingsLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is PaintingsLoaded) {
+            final paintingsList = state.paintings;
+            return LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                if (constraints.maxWidth > 600) {
+                  return galleryList(paintingsList);
+                } else {
+                  return galleryGrid(paintingsList, context, artist, paintingsBloc);
+                }
+              },
+            );
+          } else if (state is PaintingsOperationSuccess) {
+            paintingsBloc.add(
+              LoadPaintings(artist),
+            );
+            return Container();
+          } else if (state is PaintingsError) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(state.errorMessage),
+              ),
+            );
           } else {
-            return galleryGrid(currentPaintings);
+            return Container();
           }
         },
       ),
