@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_course/homework/lesson9/data/models/painting.dart';
-import 'package:flutter_course/homework/lesson9/data/network_client.dart.dart';
+import 'package:flutter_course/homework/lesson9/data/network_client.dart';
 import 'package:meta/meta.dart';
 
 part 'paintings_event.dart';
