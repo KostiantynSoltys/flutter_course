@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/homework/lesson9/bloc/paintings_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'contacts.dart';
 
-Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
-    changeToFigurative, changeToLandscape, changeToStillLife) {
+Widget drawer(context, paintingsBloc, artist) {
   return Drawer(
     child: ListView(
       children: [
@@ -22,7 +22,8 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
-            changeToAll();
+            artist = 'emil-nolde';
+            paintingsBloc.add(LoadPaintings(artist));
             Navigator.of(context).pop();
           },
         ),
@@ -31,7 +32,8 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
-            changeToAbstract();
+            artist = 'otto-dix';
+            paintingsBloc.add(LoadPaintings(artist));
             Navigator.of(context).pop();
           },
         ),
@@ -40,7 +42,8 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
-            changeToDrawings();
+            artist = 'otto-mueller';
+            paintingsBloc.add(LoadPaintings(artist));
             Navigator.of(context).pop();
           },
         ),
@@ -49,7 +52,8 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
-            changeToFigurative();
+            artist = 'max-pechstein';
+            paintingsBloc.add(LoadPaintings(artist));
             Navigator.of(context).pop();
           },
         ),
@@ -58,7 +62,8 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
-            changeToLandscape();
+            artist = 'erich-heckel';
+            paintingsBloc.add(LoadPaintings(artist));
             Navigator.of(context).pop();
           },
         ),
@@ -67,7 +72,8 @@ Widget drawer(context, changeToAll, changeToAbstract, changeToDrawings,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge),
           onTap: () {
-            changeToStillLife();
+            artist = 'karl-schmidt-rottluff';
+            paintingsBloc.add(LoadPaintings(artist));
             Navigator.of(context).pop();
           },
         ),

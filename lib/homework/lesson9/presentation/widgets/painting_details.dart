@@ -14,7 +14,7 @@ class PaintingDetails extends StatelessWidget {
         child: Center(
           child: Stack(
             children: [
-              Image.network(painting.link),
+              Image.network(painting.image),
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context)
@@ -25,7 +25,7 @@ class PaintingDetails extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    painting.description,
+                    '${painting.title} (${painting.yearAsString})',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_course/homework/lesson9/bloc/paintings_bloc.dart';
+import 'package:flutter_course/homework/lesson9/data/network_client.dart';
 import 'package:flutter_course/homework/lesson9/presentation/widgets/'
     'main_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -42,24 +45,29 @@ class _AppState extends State<App> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('uk'), // Ukrainian
-      ],
-      themeMode: themeModeCustom,
-      darkTheme: myDarkTheme(),
-      theme: myTheme(),
-      locale: locale,
-      home: MainScreen(
-          onLanguageSwitch: onLanguageSwitch,
-          onThemeModeSwitch: onThemeModeSwitch),
+    return BlocProvider(
+      create: (context) => PaintingsBloc(
+        networkCLient: NetworkCLient(),
+      ),
+      child: MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'), // English
+          Locale('uk'), // Ukrainian
+        ],
+        themeMode: themeModeCustom,
+        darkTheme: myDarkTheme(),
+        theme: myTheme(),
+        locale: locale,
+        home: MainScreen(
+            onLanguageSwitch: onLanguageSwitch,
+            onThemeModeSwitch: onThemeModeSwitch),
+      ),
     );
   }
 }
