@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({super.key});
@@ -19,15 +19,15 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final Email email = Email(
-    //   body: _feedbackController.text,
-    //   subject: 'Feedback',
-    //   recipients: ['theartofukraine@gmail.com'],
-    //   cc: ['cc@theartofukraine@gmail.com'],
-    //   bcc: ['bcc@theartofukraine@gmail.com'],
+    final Email email = Email(
+      body: _feedbackController.text,
+      subject: 'Feedback',
+      recipients: ['theartofukraine@gmail.com'],
+      cc: ['cc@theartofukraine@gmail.com'],
+      bcc: ['bcc@theartofukraine@gmail.com'],
     //attachmentPaths: ['/path/to/attachment.zip'],
-    //   isHTML: false,
-    // );
+      isHTML: false,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -90,7 +90,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10))),
                 onPressed: () async {
-                  // await FlutterEmailSender.send(email);
+                  await FlutterEmailSender.send(email);
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
