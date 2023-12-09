@@ -34,5 +34,7 @@ Every day there will be a small post about one of the personalities of Ukrainian
 
 ![GIF з домашньої роботи](lesson17.gif)
 
+![GIF з домашньої роботи](lesson22.gif)
+
 
 
