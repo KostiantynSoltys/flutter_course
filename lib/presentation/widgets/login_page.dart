@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,9 +37,15 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Image.asset('assets/images/art_of_ukraine.png'),
-                ),
+                    padding: const EdgeInsets.symmetric(horizontal: 50),
+                    child: SvgPicture.asset(
+                      'assets/images/Art of Ukraine.svg',
+                      width: 200,
+                      height: 200,
+                      colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.onTertiaryContainer,
+                          BlendMode.srcIn),
+                    )),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),

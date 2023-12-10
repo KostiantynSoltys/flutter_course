@@ -28,6 +28,8 @@ class Repository {
               title: data['title'],
               text: data['text'],
               likes: data['likes'],
+              source_links: data['source_links'],
+              more_art_links: data['more_art_links'],
             );
           },
         ).toList();
@@ -52,6 +54,8 @@ class Repository {
               title: data['title'],
               text: data['text'],
               likes: data['likes'],
+              source_links: data['source_links'],
+              more_art_links: data['more_art_links'],
             );
           },
         ).toList();

@@ -25,7 +25,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
       recipients: ['theartofukraine@gmail.com'],
       cc: ['cc@theartofukraine@gmail.com'],
       bcc: ['bcc@theartofukraine@gmail.com'],
-    //attachmentPaths: ['/path/to/attachment.zip'],
       isHTML: false,
     );
 
@@ -52,38 +51,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: SizedBox(
-                  width: 340,
-                  height: 400,
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.top,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: null,
-                    expands: true,
-                    keyboardType: TextInputType.multiline,
-                    controller: _feedbackController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.onPrimary),
-                          borderRadius: BorderRadius.circular(10)),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color:
-                                Theme.of(context).colorScheme.inversePrimary),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      //hintText: 'Password',
-                      fillColor: Theme.of(context).colorScheme.onInverseSurface,
-                      filled: true,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 50),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 10),
