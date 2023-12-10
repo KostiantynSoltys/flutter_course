@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/homework/lesson12/presentation/widgets/main_screen.dart';
+import 'package:flutter_course/homework/lesson12/presentation/widgets/inherited_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_course/firebase_options.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 14),
             ),
       ),
-      home: const MainScreen(),
+      home: const CheckConnection(),
     );
   }
 }

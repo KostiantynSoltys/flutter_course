@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/homework/lesson12/controller/tasks_actions.dart';
 import 'package:flutter_course/homework/lesson12/presentation/widgets/'
+    'inherited_widget.dart';
+import 'package:flutter_course/homework/lesson12/presentation/widgets/'
     'task_item.dart';
 import 'package:intl/intl.dart';
 
@@ -88,207 +90,221 @@ class _NewTaskState extends State<NewTask> {
 
   @override
   Widget build(BuildContext context) {
+    final bool? isNetworkAvailable =
+        InheritedCheckConnection.of(context)?.isNetworkAvailable;
     TextTheme textStyle = Theme.of(context).textTheme;
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
-    return LayoutBuilder(
-      builder: (ctx, constraints) {
-        final width = constraints.maxWidth;
-
-        return SizedBox(
-          height: double.infinity,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
-              child: Column(
-                children: [
-                  if (width >= 600)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: TextField(
+    if (isNetworkAvailable == true) {
+      return LayoutBuilder(
+        builder: (ctx, constraints) {
+          final width = constraints.maxWidth;
+          return SizedBox(
+            height: double.infinity,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
+                child: Column(
+                  children: [
+                    if (width >= 600)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _titleController,
+                              maxLength: 50,
+                              decoration: const InputDecoration(
+                                label: Text('Title'),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 24),
+                          Expanded(
+                            child: TextField(
+                              controller: _descriptionController,
+                              decoration: const InputDecoration(
+                                label: Text('Description'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        children: [
+                          TextField(
                             controller: _titleController,
                             maxLength: 50,
                             decoration: const InputDecoration(
                               label: Text('Title'),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 24),
-                        Expanded(
-                          child: TextField(
+                          TextField(
                             controller: _descriptionController,
+                            maxLength: 50,
                             decoration: const InputDecoration(
                               label: Text('Description'),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  else
-                    Column(
-                      children: [
-                        TextField(
-                          controller: _titleController,
-                          maxLength: 50,
-                          decoration: const InputDecoration(
-                            label: Text('Title'),
+                          TextField(
+                            controller: _textController,
+                            maxLength: 1500,
+                            decoration: const InputDecoration(
+                              label: Text('Text'),
+                            ),
                           ),
-                        ),
-                        TextField(
-                          controller: _descriptionController,
-                          maxLength: 50,
-                          decoration: const InputDecoration(
-                            label: Text('Description'),
-                          ),
-                        ),
-                        TextField(
-                          controller: _textController,
-                          maxLength: 1500,
-                          decoration: const InputDecoration(
-                            label: Text('Text'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  if (width >= 600)
-                    TextField(
-                      controller: _textController,
-                      maxLength: 1500,
-                      decoration: const InputDecoration(
-                        label: Text('Text'),
+                        ],
                       ),
-                    )
-                  else
-                    Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              DropdownButton(
-                                value: _selectedStatus,
-                                items: Status.values
-                                    .map(
-                                      (category) => DropdownMenuItem(
-                                        value: category,
-                                        child:
-                                            Text(category.name.toUpperCase()),
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (value) {
-                                  if (value == null) {
-                                    return;
-                                  }
-                                  setState(
-                                    () {
-                                      _selectedStatus = value;
-                                    },
-                                  );
-                                },
-                              ),
-                              Text(
-                                _selectedDeadline == null
-                                    ? 'Select deadline'
-                                    : formatter.format(_selectedDeadline!),
-                                style: textStyle.titleMedium,
-                              ),
-                              IconButton(
-                                onPressed: _presentDatePicker,
-                                icon: const Icon(Icons.calendar_month),
-                              ),
-                            ],
-                          ),
+                    if (width >= 600)
+                      TextField(
+                        controller: _textController,
+                        maxLength: 1500,
+                        decoration: const InputDecoration(
+                          label: Text('Text'),
                         ),
-                      ],
-                    ),
-                  const SizedBox(height: 16),
-                  if (width >= 600)
-                    Row(
-                      children: [
-                        //const Spacer(),
-                        DropdownButton(
-                          value: _selectedStatus,
-                          items: Status.values
-                              .map(
-                                (category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(category.name.toUpperCase()),
+                      )
+                    else
+                      Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                DropdownButton(
+                                  value: _selectedStatus,
+                                  items: Status.values
+                                      .map(
+                                        (category) => DropdownMenuItem(
+                                          value: category,
+                                          child:
+                                              Text(category.name.toUpperCase()),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (value) {
+                                    if (value == null) {
+                                      return;
+                                    }
+                                    setState(
+                                      () {
+                                        _selectedStatus = value;
+                                      },
+                                    );
+                                  },
                                 ),
-                              )
-                              .toList(),
-                          onChanged: (value) {
-                            if (value == null) {
-                              return;
-                            }
-                            setState(
-                              () {
-                                _selectedStatus = value;
-                              },
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 24),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
+                                Text(
                                   _selectedDeadline == null
                                       ? 'Select deadline'
                                       : formatter.format(_selectedDeadline!),
-                                  style: textStyle.titleMedium),
-                              IconButton(
-                                onPressed: _presentDatePicker,
-                                icon: const Icon(Icons.calendar_month),
-                              )
-                            ],
+                                  style: textStyle.titleMedium,
+                                ),
+                                IconButton(
+                                  onPressed: _presentDatePicker,
+                                  icon: const Icon(Icons.calendar_month),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Cancel'),
-                        ),
-                        //const Spacer(),
-                        ElevatedButton(
-                          onPressed: () {
-                            _submitTaskData();
-                          },
-                          child: const Text('Save Task'),
-                        ),
-                      ],
-                    )
-                  else
-                    Row(
-                      children: [
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Cancel'),
-                        ),
-                        const Spacer(),
-                        ElevatedButton(
-                          onPressed: () {
-                            _submitTaskData();
-                          },
-                          child: const Text('Save Task'),
-                        ),
-                      ],
-                    )
-                ],
+                        ],
+                      ),
+                    const SizedBox(height: 16),
+                    if (width >= 600)
+                      Row(
+                        children: [
+                          //const Spacer(),
+                          DropdownButton(
+                            value: _selectedStatus,
+                            items: Status.values
+                                .map(
+                                  (category) => DropdownMenuItem(
+                                    value: category,
+                                    child: Text(category.name.toUpperCase()),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              if (value == null) {
+                                return;
+                              }
+                              setState(
+                                () {
+                                  _selectedStatus = value;
+                                },
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 24),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                    _selectedDeadline == null
+                                        ? 'Select deadline'
+                                        : formatter.format(_selectedDeadline!),
+                                    style: textStyle.titleMedium),
+                                IconButton(
+                                  onPressed: _presentDatePicker,
+                                  icon: const Icon(Icons.calendar_month),
+                                )
+                              ],
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          //const Spacer(),
+                          ElevatedButton(
+                            onPressed: () {
+                              _submitTaskData();
+                            },
+                            child: const Text('Save Task'),
+                          ),
+                        ],
+                      )
+                    else
+                      Row(
+                        children: [
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          const Spacer(),
+                          ElevatedButton(
+                            onPressed: () {
+                              _submitTaskData();
+                            },
+                            child: const Text('Save Task'),
+                          ),
+                        ],
+                      )
+                  ],
+                ),
               ),
             ),
+          );
+        },
+      );
+    } else {
+      return const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'No internet connection',
+            style: TextStyle(fontSize: 28),
           ),
-        );
-      },
-    );
+        ],
+      );
+    }
   }
 }
